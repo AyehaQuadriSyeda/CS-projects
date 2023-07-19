@@ -1,0 +1,154 @@
+#light
+
+
+
+
+
+namespace compiler
+  module lexer = begin
+    val private keywords : string list
+    val private identifier_start : char list
+    val private identifier_chars : char list
+    val private lookupKeyword : id:string -> string
+    val private nextChar : input:System.IO.StreamReader -> char
+    val private skipRestOfLine : input:System.IO.StreamReader -> unit
+    val private collectID :
+      nextc:char -> input:System.IO.StreamReader -> id:string -> string * char
+    val private collectStrLiteral :
+      nextc:char -> input:System.IO.StreamReader -> literal:string -> string
+    val private collectIntLiteral :
+      nextc:char ->
+        input:System.IO.StreamReader -> literal:string -> string * char
+    val private collectRealLiteral :
+      nextc:char ->
+        input:System.IO.StreamReader -> literal:string -> string * char
+    val private lexer :
+      nextc:char ->
+        input:System.IO.StreamReader -> tokens:string list -> string list
+    val analyze : filename:string -> string list
+  end
+
+namespace compiler
+  module parser = begin
+    val private matchToken :
+      expected_token:string -> tokens:string list -> string list
+    val private contains : x:'a -> list:'a list -> bool when 'a : equality
+    val private beginswith : pattern:string -> token:string -> bool
+    val private isexprop : tokens:string list -> bool
+    val private exprop : tokens:string list -> string list
+    val private exprvalue : tokens:string list -> string list
+    val expr : tokens:string list -> string list
+    val private vardec1 : tokens:string list -> string list
+    val private input : tokens:string list -> string list
+    val private outputvalue : tokens:string list -> string list
+    val private output : tokens:string list -> string list
+    val private assignment : tokens:string list -> string list
+    val private condition : tokens:string list -> string list
+    val private stmt : tokens:string list -> string list
+    val private thenpart : tokens:string list -> string list
+    val private elsepart : tokens:string list -> string list
+    val private ifstmt : tokens:string list -> string list
+    val private morestmts : tokens:string list -> string list
+    val private stmts : tokens:string list -> string list
+    val private simpleC : tokens:string list -> string list
+    val parse : tokens:string list -> string
+  end
+
+namespace compiler
+  module analyzer = begin
+    val private matchToken :
+      expected_token:string -> tokens:string list -> string list
+    val private contains_var :
+      x:'a -> symboltable:('a * 'b) list -> bool when 'a : equality
+    val private contains : x:'a -> list:'a list -> bool when 'a : equality
+    val private beginswith : pattern:string -> token:string -> bool
+    val private isexprop : tokens:string list -> bool
+    val private exprop : tokens:'a list -> 'a list
+    val private exprvalue : tokens:string list -> string list
+    val expr : tokens:string list -> string list
+    val private vardec1 :
+      tokens:string list ->
+        symboltable:(string * string) list ->
+          (string * string) list * string list
+    val private input : tokens:string list -> string list
+    val private outputvalue : tokens:string list -> string list
+    val private output : tokens:string list -> string list
+    val private assignment : tokens:string list -> string list
+    val private condition : tokens:string list -> string list
+    val private stmt :
+      tokens:string list ->
+        symboltable:(string * string) list ->
+          (string * string) list * string list
+    val private thenpart :
+      tokens:string list ->
+        ((string * string) list -> (string * string) list * string list)
+    val private elsepart :
+      tokens:string list ->
+        symboltable:(string * string) list ->
+          (string * string) list * string list
+    val private ifstmt :
+      tokens:string list ->
+        symboltable:(string * string) list ->
+          (string * string) list * string list
+    val private morestmts :
+      tokens:string list ->
+        symboltable:(string * string) list ->
+          (string * string) list * string list
+    val private stmts :
+      tokens:string list -> (string * string) list * string list
+    val private simpleC :
+      tokens:string list -> string list * (string * string) list
+    val build_symboltable :
+      tokens:string list -> string * (string * string) list
+  end
+
+namespace compiler
+  module checker = begin
+    val private matchToken :
+      expected_token:string -> tokens:string list -> string list
+    val private contains_op : x:'a -> list:'a list -> bool when 'a : equality
+    val private contains_var :
+      x:'a -> symboltable:('a * 'b) list -> bool when 'a : equality
+    val private get_type : x:string -> symboltable:(string * 'a) list -> 'a
+    val private contains : x:'a -> list:'a list -> bool when 'a : equality
+    val private beginswith : pattern:string -> token:string -> bool
+    val private isexprop : tokens:string list -> bool
+    val private exprop : tokens:string list -> string list
+    val private exprvalue :
+      tokens:string list ->
+        symboltable:(string * string) list -> string * string list
+    val expr :
+      tokens:string list ->
+        symboltable:(string * string) list -> string * string list
+    val private vardec1 : tokens:string list -> string list
+    val private input :
+      tokens:string list -> symboltable:(string * 'a) list -> string list
+    val private outputvalue :
+      tokens:string list -> symboltable:(string * string) list -> string list
+    val private output :
+      tokens:string list -> symboltable:(string * string) list -> string list
+    val private assignment :
+      tokens:string list -> symboltable:(string * string) list -> string list
+    val private condition :
+      tokens:string list -> symboltable:(string * string) list -> string list
+    val private stmt :
+      tokens:string list -> symboltable:(string * string) list -> string list
+    val private thenpart :
+      tokens:string list -> symboltable:(string * string) list -> string list
+    val private elsepart :
+      tokens:string list -> symboltable:(string * string) list -> string list
+    val private ifstmt :
+      tokens:string list -> symboltable:(string * string) list -> string list
+    val private morestmts :
+      tokens:string list -> symboltable:(string * string) list -> string list
+    val private stmts :
+      tokens:string list -> symboltable:(string * string) list -> string list
+    val private simpleC :
+      tokens:string list -> symboltable:(string * string) list -> string list
+    val typecheck :
+      tokens:string list -> symboltable:(string * string) list -> string
+  end
+
+module Main
+val main : argv:string [] -> int
+
