@@ -1,0 +1,54 @@
+#light
+
+
+
+
+
+namespace ImageLibrary
+  module Operations = begin
+    val graycalc : int * int * int -> int * int * int
+    val Grayscale :
+      width:int ->
+        height:int ->
+          depth:int ->
+            image:(int * int * int) list list -> (int * int * int) list list
+    val calcthreshold :
+      int * int * int -> threshold:int -> depth:int -> int * int * int
+    val Threshold :
+      width:int ->
+        height:int ->
+          depth:int ->
+            image:(int * int * int) list list ->
+              threshold:int -> (int * int * int) list list
+    val removelast : l:(int * int * int) list -> (int * int * int) list
+    val getlast : l:(int * int * int) list -> (int * int * int) list
+    val changepix : l:(int * int * int) list -> (int * int * int) list
+    val FlipHorizontal :
+      width:int ->
+        height:int ->
+          depth:int ->
+            image:(int * int * int) list list -> (int * int * int) list list
+    val calcsig : int * int * int -> int * int * int -> threshold:int -> bool
+    val checkright : l:(int * int * int) list -> threshold:int -> bool
+    val checkbelow :
+      l1:(int * int * int) list ->
+        l2:(int * int * int) list -> threshold:int -> bool
+    val pieces :
+      l1:(int * int * int) list ->
+        l2:(int * int * int) list ->
+          threshold:int -> depth:int -> (int * int * int) list
+    val EdgeDetect :
+      width:int ->
+        height:int ->
+          depth:int ->
+            image:(int * int * int) list list ->
+              threshold:int -> (int * int * int) list list
+    val reverse2 : l:(int * int * int) list -> (int * int * int) list
+    val reverse1 : l:(int * int * int) list list -> (int * int * int) list list
+    val RotateRight90 :
+      width:int ->
+        height:int ->
+          depth:int ->
+            image:(int * int * int) list list -> (int * int * int) list list
+  end
+
