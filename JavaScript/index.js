@@ -21,7 +21,6 @@ Database Connection
 --------------------------------------------
 --------------------------------------------*/
 const conn = mysql.createConnection({
-  // host: '104.154.29.133',
   host: process.env['ip_address'],
   user: process.env['user'], /* MySQL User */
   password: process.env['password'], /* MySQL Password */
